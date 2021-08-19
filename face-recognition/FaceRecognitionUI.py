@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 import face_recognition
 import os
+import csv
 from datetime import datetime
 
 
@@ -13,6 +14,8 @@ images = []
 classNames = []
 myList = os.listdir(path)
 cap = ''
+today = datetime.today()
+attendance_csv = 'face-recognition/Attendance'+today.strftime("%m_%d_%y")+'.csv'
 
 def findEncodings(images):
             encodeList = []
@@ -23,7 +26,7 @@ def findEncodings(images):
             return encodeList
 
 def markAttendance(name):
-    with open('face-recognition/Attendance.csv','r+') as f:
+    with open(attendance_csv,'w+') as f:
         myDataList = f.readlines()
         nameList = []
         for line in myDataList:
@@ -35,11 +38,10 @@ def markAttendance(name):
             f.writelines(f'\n{name},{dtString}')
 
 for img in myList:
-    print('In loop')
     curImg = cv2.imread(f'{path}/{img}')
     images.append(curImg)
     classNames.append(os.path.splitext(img)[0])
-print(classNames)
+
 
 encodeListKnown = findEncodings(images)
 
@@ -58,22 +60,29 @@ class main:
         self.stop_btn = tkinter.Button(self.bottom_frame,
                                           text='Stop Webcam',
                                           command=self.stop_cam)
-                                         # command=self.main_window.destroy)
+
+        self.read_csv_btn = tkinter.Button(self.bottom_frame,
+                                            text='Read CSV',
+                                            command=self.read_csv)
+
         self.start_btn.pack(side='left',padx=10,pady=10)
-        self.stop_btn.pack(side='left')
+        self.stop_btn.pack(side='left',padx=10,pady=10)
+        self.read_csv_btn.pack(side='left')
 
         self.bottom_frame.pack(ipadx=10, ipady=10)
 
         tkinter.mainloop()
         
-    
+    def read_csv(self):
+        with open(attendance_csv, 'r') as file:
+            reader = csv.reader(file)
+            for row in reader:
+                print(row)
+
     def start_cam(self):
         
-        global cap
-        self.flag = 0
-        print('start')
-        
-        print(encodeListKnown)
+        global cap        
+        #print(encodeListKnown)
         
         cap = cv2.VideoCapture(0)
 
@@ -101,12 +110,13 @@ class main:
                     cv2.putText(img,name,(x1+6,y2-6),cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
                     markAttendance(name)
 
-            cv2.waitKey(1)
+            
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
             cv2.imshow('Webcam',img)
+            cv2.waitKey(1)
             
             
         #tkinter.messagebox.showinfo('Starting Webcam...!')
