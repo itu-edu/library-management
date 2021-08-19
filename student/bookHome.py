@@ -21,9 +21,6 @@ class drawBookModule:
         headingLabel = Label(headingFrame2, text="Welcome! Manage books from this module.", fg='black')
         headingLabel.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.5)
 
-        # greet = Label(window, font=('arial', 30, 'bold'), text="Welcome! Manage books from this module.")
-        # greet.grid(row=0, columnspan=3)
-
         addbtn = Button(window, text="Add Books", command=addBooks, bg="DodgerBlue2", fg="black",
                         font=('arial', 15, 'bold'))
         addbtn.place(relx=0.35, rely=0.30, relwidth=0.20, relheight=0.08)

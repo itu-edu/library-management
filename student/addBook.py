@@ -1,6 +1,9 @@
 from tkinter import *
 from tkinter import messagebox
-import sqlite3
+from db import *
+
+conn = sqlite3.connect('library_info.db')
+cursor = conn.cursor()
 
 
 def add_db():
@@ -8,34 +11,29 @@ def add_db():
     global title
     global author
 
-    bid = id.get()
     btitle = title.get()
     bauthor = author.get()
 
-    # db = sqlite3.connector.connect(host="localhost", user="root", password='your password', database='db')
-    # cursor = db.cursor()
-
-    print(bid, end='--')
     print(btitle, end='--')
     print(bauthor, end='--')
     print("add")
 
-    # sqlquery = "insert into books values('" + bid + "','" + btitle + "','" + bauthor + "','YES');"
-    # print(sqlquery)
-
     try:
-        # cursor.execute(sqlquery)
-        # db.commit()
+        cursor.execute('''INSERT INTO Books(Title, Author, Status, User_id )
+                                       VALUES(?, ?, ?, ?)''', (btitle, bauthor, "available", 1))
+
+        conn.commit()
+
         messagebox.showinfo('Success', "Book added Successfully")
 
     except:
         messagebox.showinfo("Error", "Cannot add given book data into Database")
 
-    # window.destroy()
+    window.destroy()
 
 
 def addBooks():
-    global id
+    global window
     global title
     global author
 
@@ -53,41 +51,23 @@ def addBooks():
     headingLabel = Label(headingFrame2, text="Add Books", fg='black')
     headingLabel.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.5)
 
-    # ----------id-------------------
-
-    L = Label(window, font=('arial', 15, 'bold'), text="Enter Book id: ")
-    L.place(relx=0.05, rely=0.3)
-
-    # L = Label(window, font=('arial', 15, 'bold'), text="   ")
-    # L.grid(row=2, column=2)
-
-    id = Entry(window, width=5, font=('arial', 15, 'bold'))
-    id.place(relx=0.3, rely=0.3, relwidth=0.62)
-
     # ----------title-------------------
 
     L = Label(window, font=('arial', 15, 'bold'), text="Enter Title: ")
-    L.place(relx=0.05, rely=0.5)
-
-    # L = Label(window, font=('arial', 15, 'bold'), text="   ")
-    # L.grid(row=4, column=2)
+    L.place(relx=0.05, rely=0.3)
 
     title = Entry(window, width=5, font=('arial', 15, 'bold'))
-    title.place(relx=0.3, rely=0.5, relwidth=0.62)
+    title.place(relx=0.3, rely=0.3, relwidth=0.62)
 
     # ----------author-------------------
 
     L = Label(window, font=('arial', 15, 'bold'), text="Enter Author: ")
-    L.place(relx=0.05, rely=0.7)
-
-    # L = Label(window, font=('arial', 15, 'bold'), text="   ")
-    # L.grid(row=6, column=2)
+    L.place(relx=0.05, rely=0.4)
 
     author = Entry(window, width=5, font=('arial', 15, 'bold'))
-    author.place(relx=0.3, rely=0.7, relwidth=0.62)
+    author.place(relx=0.3, rely=0.4, relwidth=0.62)
 
     submitbtn = Button(window, text="Submit", command=add_db, bg="DodgerBlue2", fg="black", font=('arial', 15, 'bold'))
     submitbtn.place(relx=0.3, rely=0.9, relwidth=0.62)
 
     print("add")
-    pass

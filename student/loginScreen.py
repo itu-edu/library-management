@@ -1,5 +1,12 @@
 from bookHome import *
+from db import *
+import issueBook
+import returnBook
 
+connection = sqlite3.connect('library_info.db')
+cursor = conn.cursor()
+
+global root
 root = Tk()
 root.title("Library")
 root.minsize(width=400, height=400)
@@ -18,6 +25,19 @@ headingLabel = Label(headingFrame2, text="Python Project : Library Management", 
 headingLabel.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.5)
 
 
+def currentLogin():
+    name = entry1.get()
+    password = entry2.get()
+    role = en4.get()
+
+    cur.execute('''SELECT User_id FROM Users WHERE Users.Username = ? AND Users.Password = ?''', (name, password))
+    result = cur.fetchall()
+    for row in result:
+        print(f'from login : id {row[0]:<3}')
+
+    return result
+
+
 def validate():
     print("in validate function 2")
     name = entry1.get()
@@ -29,16 +49,33 @@ def validate():
     if role == 'student':
         # need to check credentials, if matches from database then open the student menu options
         # view book, search book, view all books, occupy or release book
-        e_text = en4.get()
-        print(e_text)
+        cur.execute('''SELECT * FROM Users WHERE Users.Username = ? AND Users.Password = ?''', (name, password))
+        results = cur.fetchall()
+        # print(len(results))
 
-        print('student selected')
-        manageBookOperations()
+        # need to update later, we should have unique values for username and password
+        if len(results) == 1:
+            print("validation matches and perform book operations")
+            cur.execute('''SELECT User_id FROM Users WHERE Users.Username = ? AND Users.Password = ?''',
+                        (name, password))
+            result = cur.fetchall()
+
+            global logged_in_id
+            issueBook.logged_in_id = result
+            returnBook.logged_in_id = result
+
+            manageBookOperations()
+        else:
+            print("credentials doesn't match, please retry")
 
     elif role == 'librarian':
         # if credentials matches from the databse with user role, open librarian menu options
         # add book, view book, search book, view all books, view status for availability
         print('librarian or something else selected')
+
+    else:
+        print('invalid user, cannot access')
+
 
 def UserLogin():
     global headingFrame1, headingFrame2, headingLabel, btn1, btn1, Canvas1
@@ -76,6 +113,7 @@ def UserLogin():
     lable2.place(relx=0.05, rely=0.5)
 
     entry2 = Entry(labelFrame)
+    entry2.config(show="*");
     entry2.place(relx=0.3, rely=0.5, relwidth=0.62)
 
     # Role

@@ -1,65 +1,59 @@
+import sqlite3
 from tkinter import *
 from tkinter import messagebox
-import mysql.connector
+
+conn = sqlite3.connect('library_info.db')
+cursor = conn.cursor()
+logged_in_id = 0
 
 
 def issue_db():
     global id
-    global StudentName
+    global Studentid
+
+    global logged_in_id
+    print("issue-id", logged_in_id)
 
     bid = id.get()
-    bStudentName = StudentName.get()
-
-    # db = mysql.connector.connect(host="localhost", user="root", password='your password', database='db')
-    # cursor = db.cursor()
-
-    print(bid, end='--')
-    print(bStudentName, end='--')
-    print("issue")
+    bStudentId = Studentid.get()
+    print("student id to issue book", bStudentId)
 
     try:
-        checkavailability = " select * from books where available='YES';"
-        print(checkavailability)
-        # cursor.execute(checkavailability)
+        # get list of all available book, if the one user want to issue
+        # is available, user can (update) issue to userid.
+        cursor.execute('''SELECT Book_id from Books where Status = 'Available' or Status = 'available' ''')
+        result = cursor.fetchall()
 
         flag = 0
 
-        # for i in cursor:
-        #     print(i[0])
-        #     if (i[0] == bid):
-        #         flag = 1
-        #         break;
+        # if entered bookid belongs to bookid from the available list
+        for i in result:
+            flag = int(i[0]) == int(bid)
+            print("values", i[0], bid, flag, type(bid), type(i[0]))
 
-        if flag == 1:
-            updatequery = "update books set available='NO' where bid='" + bid + "';"
-            print(updatequery)
-            # cursor.execute(updatequery)
-            # db.commit()
-
-            sqlquery = "insert into issue values('" + bid + "','" + bStudentName + "' );"
-            print(sqlquery)
-
-            # cursor.execute(sqlquery)
-            # db.commit()
-
-            messagebox.showinfo('Success', "Book issued Successfully")
-        else:
-            messagebox.showinfo("Error", "Required Book is not available")
+            if int(i[0]) == int(bid):
+                print("to change value of flag check each i", i[0], bid)
+                cursor.execute('''UPDATE Books SET Status = ?, User_id = ? WHERE Book_id = ? ''',
+                               ("no", int(bStudentId), int(bid)))
+                conn.commit()
+                messagebox.showinfo('Success', "Book issued Successfully")
+                break
+            else:
+                messagebox.showinfo("Error", "Required Book is not available")
     except:
         messagebox.showinfo("Error", "Cannot issue given book ")
 
+    window.destroy()
 
 def issueBooks():
     global id
-    global StudentName
+    global Studentid
+    global window
 
     window = Tk()
     window.title('Library Management')
     window.minsize(width=400, height=400)
     window.geometry("600x500")
-
-    # greet = Label(window, font=('arial', 30, 'bold'), text="Issue Books")
-    # greet.grid(row=0, columnspan=3)
 
     headingFrame1 = Frame(window, bg="green", bd=5)
     headingFrame1.place(relx=0.2, rely=0.1, relwidth=0.6, relheight=0.16)
@@ -75,26 +69,23 @@ def issueBooks():
     L = Label(window, font=('arial', 15, 'bold'), text="Enter Book id: ")
     L.place(relx=0.05, rely=0.3)
 
-    # L = Label(window, font=('arial', 15, 'bold'), text="   ")
-    # L.grid(row=2, column=2)
 
     id = Entry(window, width=5, font=('arial', 15, 'bold'))
     id.place(relx=0.3, rely=0.3, relwidth=0.62)
 
     # ----------StudentName-------------------
 
-    L = Label(window, font=('arial', 15, 'bold'), text="Enter StudentName: ")
+    L = Label(window, font=('arial', 15, 'bold'), text="Enter Student ID: ")
     L.place(relx=0.05, rely=0.5)
 
     L = Label(window, font=('arial', 15, 'bold'), text="   ")
     L.grid(row=4, column=2)
 
-    StudentName = Entry(window, width=5, font=('arial', 15, 'bold'))
-    StudentName.place(relx=0.3, rely=0.5, relwidth=0.62)
+    Studentid = Entry(window, width=5, font=('arial', 15, 'bold'))
+    Studentid.place(relx=0.3, rely=0.5, relwidth=0.62)
 
-    submitbtn = Button(window, text="Submit", command=issue_db, bg="DodgerBlue2", fg="white",
+    submitbtn = Button(window, text="Submit", command=issue_db, bg="DodgerBlue2", fg="Blue",
                        font=('arial', 15, 'bold'))
     submitbtn.place(relx=0.3, rely=0.9, relwidth=0.62)
 
     print("issue")
-    pass

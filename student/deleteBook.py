@@ -2,41 +2,36 @@ from tkinter import *
 from tkinter import messagebox
 import sqlite3
 
+conn = sqlite3.connect('library_info.db')
+cursor = conn.cursor()
 
 def delete_db():
     global id
 
     bid = id.get()
 
-    # db = sqlite3.connector.connect(host="localhost", user="root", password='your password', database='db')
-    # cursor = db.cursor()
-
     print(bid, end='--')
     print("delete")
 
-    # sqlquery = "delete from books where bid='" + bid + "';"
-    # print(sqlquery)
-
     try:
-        # cursor.execute(sqlquery)
-        # db.commit()
+        cursor.execute('''DELETE FROM Books WHERE Book_id = ?''', (bid,))
+        conn.commit()
         messagebox.showinfo('Success', "Book deleted Successfully")
+
     except:
         messagebox.showinfo("Error", "Book with given id does not exist")
 
-    # window.destroy()
+    window.destroy()
 
 
 def deleteBooks():
     global id
+    global window
 
     window = Tk()
     window.title('Library Management')
     window.minsize(width=400, height=400)
     window.geometry("600x500")
-
-    # greet = Label(window, font=('arial', 30, 'bold'), text="Delete Books")
-    # greet.grid(row=0, columnspan=3)
 
     headingFrame1 = Frame(window, bg="green", bd=5)
     headingFrame1.place(relx=0.2, rely=0.1, relwidth=0.6, relheight=0.16)
@@ -52,8 +47,6 @@ def deleteBooks():
     L = Label(window, font=('arial', 15, 'bold'), text="Enter Book id: ")
     L.place(relx=0.05, rely=0.3)
 
-    # L = Label(window, font=('arial', 15, 'bold'), text="   ")
-    # L.grid(row=2, column=2)
 
     id = Entry(window, width=5, font=('arial', 15, 'bold'))
     id.place(relx=0.3, rely=0.3, relwidth=0.62)
@@ -63,4 +56,3 @@ def deleteBooks():
     submitbtn.place(relx=0.05, rely=0.4)
 
     print("delete")
-    pass
