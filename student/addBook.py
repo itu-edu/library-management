@@ -67,7 +67,7 @@ def addBooks():
     author = Entry(window, width=5)
     author.place(relx=0.3, rely=0.5, relwidth=0.62,relheight=0.07)
 
-    submitbtn = Button(window, text="Add", command=add_db, bg="#455A64", fg="white")
+    submitbtn = Button(window, text="Add", command=add_db, bg="#455A64", fg="blue")
     submitbtn.place(relx=0.6, rely=0.7, relwidth=0.30, relheight=0.08)
 
     print("add")

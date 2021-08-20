@@ -40,4 +40,11 @@ cur.execute('''CREATE TABLE IF NOT EXISTS Books(Book_id INTEGER PRIMARY KEY NOT 
 # cur.execute('''INSERT INTO Books(Title, Author, Status, User_id)
 #                                       VALUES(?, ? , ?, ?)''', (Title, Author, Status, user_id))
 
+# cur.execute('''INSERT INTO Users(Username, Password, Role)
+#                                VALUES(?, ? , ?)''', ("nauka_shah", "12345", "librarian"))
+#
+# cur.execute('''INSERT INTO Users(Username, Password, Role)
+#                                VALUES(?, ? , ?)''', ("aditi_parikh", "67890", "librarian"))
+
+
 conn.commit()

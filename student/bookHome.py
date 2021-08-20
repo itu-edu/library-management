@@ -20,19 +20,19 @@ class drawBookModule:
         headingLabel = Label(headingFrame2, text="Welcome, User!", fg='black')
         headingLabel.place(relx=0.02, rely=0.2, relwidth=0.96, relheight=0.5)
 
-        addbtn = Button(window, text="Add New Book", command=addBooks, bg="#455A64", fg="white")
+        addbtn = Button(window, text="Add New Book", command=addBooks, bg="#455A64", fg="blue")
         addbtn.place(relx=0.35, rely=0.30, relwidth=0.30, relheight=0.08)
 
-        deletebtn = Button(window, text="Delete a Book", command=deleteBooks, bg="#455A64", fg="white")
+        deletebtn = Button(window, text="Delete a Book", command=deleteBooks, bg="#455A64", fg="blue")
         deletebtn.place(relx=0.35, rely=0.40, relwidth=0.30, relheight=0.08)
 
-        issuebtn = Button(window, text="Issue a Book", command=issueBooks, bg="#455A64", fg="white")
+        issuebtn = Button(window, text="Issue a Book", command=issueBooks, bg="#455A64", fg="blue")
         issuebtn.place(relx=0.35, rely=0.50, relwidth=0.30, relheight=0.08)
 
-        returnbtn = Button(window, text="Return Book", command=returnBooks, bg="#455A64", fg="white")
+        returnbtn = Button(window, text="Return Book", command=returnBooks, bg="#455A64", fg="blue")
         returnbtn.place(relx=0.35, rely=0.60, relwidth=0.30, relheight=0.08)
 
-        viewbtn = Button(window, text="List of Books", command=viewBooks, bg="#455A64", fg="white")
+        viewbtn = Button(window, text="List of Books", command=viewBooks, bg="#455A64", fg="blue")
         viewbtn.place(relx=0.35, rely=0.70, relwidth=0.30, relheight=0.08)
 
         greet = Label(window, font=('arial', 13, 'bold'), text="Thank you")

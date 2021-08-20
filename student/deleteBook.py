@@ -5,6 +5,7 @@ import sqlite3
 conn = sqlite3.connect('library_info.db')
 cursor = conn.cursor()
 
+
 def delete_db():
     global id
 
@@ -14,14 +15,17 @@ def delete_db():
     print("delete")
 
     try:
-        cursor.execute('''DELETE FROM Books WHERE Book_id = ?''', (bid,))
-        conn.commit()
-        messagebox.showinfo('Success', "Book deleted")
+        print(bid)
+        if bid == '':
+            messagebox.showinfo('Input required', "please enter book id to delete")
+        else:
+            cursor.execute('''DELETE FROM Books WHERE Book_id = ?''', (bid,))
+            conn.commit()
+            messagebox.showinfo('Success', "Book deleted")
+            window.destroy()
 
     except:
         messagebox.showerror("Error", "Book with given id does not exist!")
-
-    window.destroy()
 
 
 def deleteBooks():
@@ -47,11 +51,10 @@ def deleteBooks():
     L = Label(window, text="Enter Book id: ")
     L.place(relx=0.05, rely=0.4)
 
-
     id = Entry(window, width=5)
-    id.place(relx=0.3, rely=0.4, relwidth=0.62,relheight=0.07)
+    id.place(relx=0.3, rely=0.4, relwidth=0.62, relheight=0.07)
 
-    submitbtn = Button(window, text="Delete", command=delete_db, bg="#455A64", fg="white")
+    submitbtn = Button(window, text="Delete", command=delete_db, bg="#455A64", fg="blue")
     submitbtn.place(relx=0.60, rely=0.8, relwidth=0.30, relheight=0.08)
 
     print("delete")

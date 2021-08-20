@@ -84,7 +84,7 @@ def issueBooks():
     Studentid = Entry(window, width=5)
     Studentid.place(relx=0.3, rely=0.5, relwidth=0.62,relheight=0.07)
 
-    submitbtn = Button(window, text="Issue", command=issue_db, bg="#455A64", fg="white")
+    submitbtn = Button(window, text="Issue", command=issue_db, bg="#455A64", fg="blue")
     submitbtn.place(relx=0.60, rely=0.7, relwidth=0.30, relheight=0.08)
 
     print("issue")

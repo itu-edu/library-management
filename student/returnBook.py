@@ -56,7 +56,7 @@ def returnBooks():
     id = Entry(window, width=5)
     id.place(relx=0.3, rely=0.4, relwidth=0.62,relheight=0.07)
 
-    submitbtn = Button(window, text="Return", command=return_db, bg="#455A64", fg="white")
+    submitbtn = Button(window, text="Return", command=return_db, bg="#455A64", fg="blue")
     submitbtn.place(relx=0.60, rely=0.8, relwidth=0.30, relheight=0.08)
 
     print("return")
