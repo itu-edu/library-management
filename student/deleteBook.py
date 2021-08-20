@@ -16,10 +16,10 @@ def delete_db():
     try:
         cursor.execute('''DELETE FROM Books WHERE Book_id = ?''', (bid,))
         conn.commit()
-        messagebox.showinfo('Success', "Book deleted Successfully")
+        messagebox.showinfo('Success', "Book deleted")
 
     except:
-        messagebox.showinfo("Error", "Book with given id does not exist")
+        messagebox.showerror("Error", "Book with given id does not exist!")
 
     window.destroy()
 
@@ -29,9 +29,9 @@ def deleteBooks():
     global window
 
     window = Tk()
-    window.title('Library Management')
+    window.title('Library Management System - Delete a Book')
     window.minsize(width=400, height=400)
-    window.geometry("600x500")
+    window.geometry("450x300")
 
     headingFrame1 = Frame(window, bg="green", bd=5)
     headingFrame1.place(relx=0.2, rely=0.1, relwidth=0.6, relheight=0.16)
@@ -39,20 +39,19 @@ def deleteBooks():
     headingFrame2 = Frame(headingFrame1, bg="#EAF0F1")
     headingFrame2.place(relx=0.01, rely=0.05, relwidth=0.98, relheight=0.9)
 
-    headingLabel = Label(headingFrame2, text="Delete Books", fg='black')
-    headingLabel.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.5)
+    headingLabel = Label(headingFrame2, text="Delete a Book", fg='black')
+    headingLabel.place(relx=0.02, rely=0.2, relwidth=0.96, relheight=0.5)
 
     # ----------id-------------------
 
-    L = Label(window, font=('arial', 15, 'bold'), text="Enter Book id: ")
-    L.place(relx=0.05, rely=0.3)
+    L = Label(window, text="Enter Book id: ")
+    L.place(relx=0.05, rely=0.4)
 
 
-    id = Entry(window, width=5, font=('arial', 15, 'bold'))
-    id.place(relx=0.3, rely=0.3, relwidth=0.62)
+    id = Entry(window, width=5)
+    id.place(relx=0.3, rely=0.4, relwidth=0.62,relheight=0.07)
 
-    submitbtn = Button(window, text="Submit", command=delete_db, bg="DodgerBlue2", fg="black",
-                       font=('arial', 15, 'bold'))
-    submitbtn.place(relx=0.05, rely=0.4)
+    submitbtn = Button(window, text="Delete", command=delete_db, bg="#455A64", fg="white")
+    submitbtn.place(relx=0.60, rely=0.8, relwidth=0.30, relheight=0.08)
 
     print("delete")

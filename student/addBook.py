@@ -24,10 +24,10 @@ def add_db():
 
         conn.commit()
 
-        messagebox.showinfo('Success', "Book added Successfully")
+        messagebox.showinfo('Success', btitle+" added.")
 
     except:
-        messagebox.showinfo("Error", "Cannot add given book data into Database")
+        messagebox.showerror("Error", "Could not add given book data into Database!")
 
     window.destroy()
 
@@ -38,9 +38,9 @@ def addBooks():
     global author
 
     window = Tk()
-    window.title('Library Management')
+    window.title('Library Management System - Add a Book')
     window.minsize(width=400, height=400)
-    window.geometry("600x600")
+    window.geometry("450x400")
 
     headingFrame1 = Frame(window, bg="green", bd=5)
     headingFrame1.place(relx=0.2, rely=0.1, relwidth=0.6, relheight=0.16)
@@ -48,26 +48,26 @@ def addBooks():
     headingFrame2 = Frame(headingFrame1, bg="#EAF0F1")
     headingFrame2.place(relx=0.01, rely=0.05, relwidth=0.98, relheight=0.9)
 
-    headingLabel = Label(headingFrame2, text="Add Books", fg='black')
-    headingLabel.place(relx=0.02, rely=0.1, relwidth=0.96, relheight=0.5)
+    headingLabel = Label(headingFrame2, text="Add new Book", fg='black')
+    headingLabel.place(relx=0.02, rely=0.2, relwidth=0.96, relheight=0.5)
 
     # ----------title-------------------
 
-    L = Label(window, font=('arial', 15, 'bold'), text="Enter Title: ")
-    L.place(relx=0.05, rely=0.3)
+    L = Label(window, text="Enter Title: ")
+    L.place(relx=0.05, rely=0.4)
 
-    title = Entry(window, width=5, font=('arial', 15, 'bold'))
-    title.place(relx=0.3, rely=0.3, relwidth=0.62)
+    title = Entry(window, width=5)
+    title.place(relx=0.3, rely=0.4, relwidth=0.62,relheight=0.07)
 
     # ----------author-------------------
 
-    L = Label(window, font=('arial', 15, 'bold'), text="Enter Author: ")
-    L.place(relx=0.05, rely=0.4)
+    L = Label(window, text="Enter Author: ")
+    L.place(relx=0.05, rely=0.5)
 
-    author = Entry(window, width=5, font=('arial', 15, 'bold'))
-    author.place(relx=0.3, rely=0.4, relwidth=0.62)
+    author = Entry(window, width=5)
+    author.place(relx=0.3, rely=0.5, relwidth=0.62,relheight=0.07)
 
-    submitbtn = Button(window, text="Submit", command=add_db, bg="DodgerBlue2", fg="black", font=('arial', 15, 'bold'))
-    submitbtn.place(relx=0.3, rely=0.9, relwidth=0.62)
+    submitbtn = Button(window, text="Add", command=add_db, bg="#455A64", fg="white")
+    submitbtn.place(relx=0.6, rely=0.7, relwidth=0.30, relheight=0.08)
 
     print("add")
