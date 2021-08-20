@@ -3,6 +3,13 @@ from deleteBook import *
 from issueBook import *
 from returnBook import *
 from viewBook import *
+import csv
+from datetime import datetime
+import tkinter
+import tkinter.messagebox
+
+today = datetime.today()
+attendance_csv = 'face-recognition/Attendance'+today.strftime("%m_%d_%y")+'.csv'
 
 class drawBookModule:
     def __init__(self):
@@ -35,11 +42,28 @@ class drawBookModule:
         viewbtn = Button(window, text="List of Books", command=viewBooks, bg="#455A64", fg="blue")
         viewbtn.place(relx=0.35, rely=0.70, relwidth=0.30, relheight=0.08)
 
+        viewbtn = Button(window, text="View Student entry Logs", command=read_csv, bg="#455A64", fg="blue")
+        viewbtn.place(relx=0.35, rely=0.80, relwidth=0.30, relheight=0.08)
+
         greet = Label(window, font=('arial', 13, 'bold'), text="Thank you")
         #greet.place(relx=0.35, rely=0.90, relwidth=0.30, relheight=0.08)
 
         window.mainloop()
 
+
+def read_csv():
+        try:
+            with open(attendance_csv, 'r') as file:
+                reader = csv.reader(file)
+                entry_logs = ''
+                for row in reader:
+                    print(row)
+                    if(len(row) == 2):
+                        entry_logs = entry_logs +"Name - "+ row[0]+" Time - "+row[1] + "\n"
+                print(entry_logs)
+                messagebox.showinfo("Entry Logs : "+today.strftime("%m/%d/%y"),entry_logs)
+        except Exception as e :
+            messagebox.showerror('Error', e+"There are no entry logs for today.!")
 
 def manageBookOperations():
     obj = drawBookModule()
