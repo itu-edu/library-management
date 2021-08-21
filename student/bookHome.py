@@ -9,7 +9,8 @@ import tkinter
 import tkinter.messagebox
 
 today = datetime.today()
-attendance_csv = 'face-recognition/Attendance'+today.strftime("%m_%d_%y")+'.csv'
+attendance_csv = '/Users/naukadhabalia/git/library-management/face-recognition/Attendance'+today.strftime("%m_%d_%y")+'.csv'
+# attendance_csv = '/Users/naukadhabalia/git/library-management/face-recognition/Attendance08_20_21.csv'
 
 class drawBookModule:
     def __init__(self):
@@ -63,7 +64,7 @@ def read_csv():
                 print(entry_logs)
                 messagebox.showinfo("Entry Logs : "+today.strftime("%m/%d/%y"),entry_logs)
         except Exception as e :
-            messagebox.showerror('Error', e+"There are no entry logs for today.!")
+            messagebox.showerror('Error', e)
 
 def manageBookOperations():
     obj = drawBookModule()

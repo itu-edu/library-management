@@ -44,7 +44,6 @@ def viewBooks():
             e = Entry(tableFrame1, width=10, fg='black')
             e.grid(row=0, column=k)
             e.insert(END, lst[0][k])
-            # e.place(relx=0.02, rely=0.3, relwidth=0.96, relheight=0.5)
 
         for i in range(total_rows):
             for j in range(total_columns):
@@ -52,23 +51,6 @@ def viewBooks():
 
                 e.grid(row=i + 1, column=j)
                 e.insert(END, results[i][j])
-                # e.place(relx=0.02, rely=0.4, relwidth=0.96, relheight=0.5)
-
-        # for row in results:
-        #     print(f'Results: {row[0]}{row[1]}{row[2]}{row[3]}{row[4]}')
-
-        # L = Label(window,
-        #           text="%-10s%-20s%-20s%-20s%-20s" % ('BID', 'Title', 'Author', 'Available', 'AssignedTo'))
-        # L.grid(row=1, columnspan=5)
-
-        # L = Label(window, text="----------------------------------------------------------------")
-        # L.grid(row=2, columnspan=5)
-
-        # x = 5
-        # for i in results:
-        #     L = Label(window, text="%-10s%-20s%-20s%-20s%-20s" % (i[0], i[1], i[2], i[3], i[4]))
-        #     L.grid(row=x, columnspan=5)
-        #     x += 1
 
     except:
         messagebox.showerror("Error", "Cannot Fetch data.")

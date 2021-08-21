@@ -19,17 +19,18 @@ def add_db():
     print("add")
 
     try:
-        cursor.execute('''INSERT INTO Books(Title, Author, Status, User_id )
+        if btitle == '' or bauthor == '':
+            messagebox.showinfo('Warning', "Input required")
+        else:
+            cursor.execute('''INSERT INTO Books(Title, Author, Status, User_id )
                                        VALUES(?, ?, ?, ?)''', (btitle, bauthor, "available", 1))
 
-        conn.commit()
-
-        messagebox.showinfo('Success', btitle+" added.")
+            conn.commit()
+            messagebox.showinfo('Success', btitle+" added.")
+            window.destroy()
 
     except:
         messagebox.showerror("Error", "Could not add given book data into Database!")
-
-    window.destroy()
 
 
 def addBooks():

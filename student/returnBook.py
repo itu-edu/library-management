@@ -26,11 +26,11 @@ def return_db():
                        ("available", int(temp_id), int(bid), "no"))
         conn.commit()
         messagebox.showinfo('Success', "Book returned.")
+        window.destroy()
 
     except:
         messagebox.showerror("Error", "Cannot return given book!")
 
-    window.destroy()
 
 def returnBooks():
     global id

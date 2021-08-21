@@ -23,27 +23,24 @@ def issue_db():
         # is available, user can (update) issue to userid.
         cursor.execute('''SELECT Book_id from Books where Status = 'Available' or Status = 'available' ''')
         result = cursor.fetchall()
+        if bid == '':
+            messagebox.showinfo('Warning', "Input required!")
 
-        flag = 0
-
-        # if entered bookid belongs to bookid from the available list
         for i in result:
-            flag = int(i[0]) == int(bid)
-            print("values", i[0], bid, flag, type(bid), type(i[0]))
-
             if int(i[0]) == int(bid):
                 print("to change value of flag check each i", i[0], bid)
                 cursor.execute('''UPDATE Books SET Status = ?, User_id = ? WHERE Book_id = ? ''',
                                ("no", int(bStudentId), int(bid)))
                 conn.commit()
                 messagebox.showinfo('Success', "Book issued.")
+                window.destroy()
                 break
             else:
-                messagebox.showerror("Error", "Required Book is not available!")
+                print("Error", "Required Book is not available!")
     except:
         messagebox.showerror("Error", "Cannot issue given book!")
 
-    window.destroy()
+
 
 def issueBooks():
     global id
