@@ -83,7 +83,7 @@ class main:
         tkinter.mainloop()
 
     def read_csv(self):
-        with open(attendance_csv, 'r') as file:
+        with open(attendance_csv, 'w') as file:
             reader = csv.reader(file)
             for row in reader:
                 print(row)
